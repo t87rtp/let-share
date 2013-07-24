@@ -5,5 +5,11 @@
 {% block content %}
   <div id="title_box">{{ post.title }}</div>
   <div id="body_box">{{ post.body }}</div>
-  <a href="/posts/{{ post.key.id }}/edit">Edit</a>
+  <a href="/posts/{{ post.key.id }}/edit">Edit</a><br>
+  <a href="/posts/{{ post.key.id }}.js">Javascript</a><br>
+  <a href="/posts/{{ post.key.id }}.js?minify=true">Javascript(minify)</a><br>
+  <a href="/posts/{{ post.key.id }}.js?immediate=true">Javascript Immediate Function</a><br>
+  <a href="/posts/{{ post.key.id }}.js?immediate=true&minify=true">Javascript(minify)</a><br>
+  as Bookmarklet: <a href="{{ post.bookmarklet }}">{{ post.title }}</a>
+  as Live Bookmarklet: <a href="{{ post.live_bookmarklet }}">{{ post.title }}</a>
 {% endblock %}

@@ -66,12 +66,32 @@ class Posts:
             if post == None:
                 self.error(404)
                 return
+            
             template_values = {
                                "post": post
                                }
             path = os.path.join(os.path.dirname(__file__), 'templates/html/show.html')
             self.response.out.write(template.render(path, template_values))
     
+    class Javascript(RequestHandlerMod):
+        def get(self, post_id):
+            #参照するPostエンティティを抽出
+            post = Post.get_by_id(int(post_id))
+            #postが空なら404エラー
+            if post == None:
+                self.error(404)
+                return
+
+            body = post.body
+            if self.request.get("immediate") == "true":
+                body = post.immediate()
+            
+            if self.request.get("minify") == "true":
+                body = slimit.minify(body)
+
+            self.response.headers['Content-Type'] = "application/javascript"
+            self.response.out.write(body)
+        
     class Edit(RequestHandlerMod):
         def get(self, post_id):
             #参照するPostエンティティを抽出
@@ -108,6 +128,7 @@ application = webapp.WSGIApplication([
                                       ("/posts/new", Posts.New),
                                       ("/posts/new.js", Posts.New),
                                       ('/posts/([0-9]*)', Posts.Show),
+                                      ('/posts/([0-9]*).js', Posts.Javascript),
                                       ('/posts/([0-9]*)/edit', Posts.Edit),
                                       ('/posts/([0-9]*)/delete', Posts.Delete)
                                       ], debug=True)
