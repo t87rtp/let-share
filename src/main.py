@@ -7,11 +7,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import template
 
-
-class MainPage(webapp.RequestHandler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write('Hello, webapp World!')
+from models import *
+from tools import *
 
 class RequestHandlerMod(webapp.RequestHandler):
     def __init__(self, *args):
@@ -33,37 +30,86 @@ class RequestHandlerMod(webapp.RequestHandler):
             self.response.headers['Content-Type'] = 'text/plain'
             self.response_type = "text"
 
-class Post:
+class MainPage(RequestHandlerMod):
+    def get(self):
+        posts = db.Query(Post).fetch(1000, 0)
+        if self.response_type == "json":
+            self.response.out.write(ModelEncoder().encode(posts))
+        else:
+            template_values = {
+                               "posts": db.Query(Post).fetch(100)
+                               }
+            path = os.path.join(os.path.dirname(__file__), 'templates/html/index.html')
+            self.response.out.write(template.render(path, template_values))
+
+class Posts:
     class New(RequestHandlerMod):
         def get(self):
             template_values = {
-                               "header": str(self.request.headers)
                                }
-            path = os.path.join(os.path.dirname(__file__), 'templates/html/posts/new')
+            path = os.path.join(os.path.dirname(__file__), 'templates/html/editor.html')
+            self.response.out.write(template.render(path, template_values))
+
+        def post(self):
+            post = Post()
+            post.title = self.request.get("title")
+            post.body = self.request.get("body")
+            post.put()
+            waitForDataPut(post)
+            self.redirect("/posts/" + str(post.key().id()))
+    
+    class Show(RequestHandlerMod):
+        def get(self, post_id):
+            #参照するPostエンティティを抽出
+            post = Post.get_by_id(int(post_id))
+            #postが空なら404エラー
+            if post == None:
+                self.error(404)
+                return
+            template_values = {
+                               "post": post
+                               }
+            path = os.path.join(os.path.dirname(__file__), 'templates/html/show.html')
             self.response.out.write(template.render(path, template_values))
     
-    class Show(webapp.RequestHandler):
+    class Edit(RequestHandlerMod):
         def get(self, post_id):
-            self.response.headers['Content-Type'] = 'text/plain'
-            self.response.out.write(post_id)
+            #参照するPostエンティティを抽出
+            post = Post.get_by_id(int(post_id))
+            #postが空なら404エラー
+            if post == None:
+                self.error(404)
+                return
+            template_values = {
+                               "post": post
+                               }
+            path = os.path.join(os.path.dirname(__file__), 'templates/html/editor.html')
+            self.response.out.write(template.render(path, template_values))
+        
+        def post(self, post_id):
+            #参照するPostエンティティを抽出
+            post = Post.get_by_id(int(post_id))
+            #postが空なら404エラー
+            if post == None:
+                self.error(404)
+                return
+            post.title = self.request.get("title")
+            post.body = self.request.get("body")
+            post.save()
+            self.redirect("/posts/" + str(post.key().id()))
     
-    class Edit(webapp.RequestHandler):
-        def get(self, post_id):
-            self.response.headers['Content-Type'] = 'text/plain'
-            self.response.out.write("edit: " + post_id)
-    
-    class Delete(webapp.RequestHandler):
+    class Delete(RequestHandlerMod):
         def get(self, post_id):
             self.response.headers['Content-Type'] = 'text/plain'
             self.response.out.write("delete: " + post_id)
 
 application = webapp.WSGIApplication([
                                       ('/', MainPage),
-                                      ("/posts/new", Post.New),
-                                      ("/posts/new.js", Post.New),
-                                      ('/posts/([0-9]*)', Post.Show),
-                                      ('/posts/([0-9]*)/edit', Post.Edit),
-                                      ('/posts/([0-9]*)/delete', Post.Delete)
+                                      ("/posts/new", Posts.New),
+                                      ("/posts/new.js", Posts.New),
+                                      ('/posts/([0-9]*)', Posts.Show),
+                                      ('/posts/([0-9]*)/edit', Posts.Edit),
+                                      ('/posts/([0-9]*)/delete', Posts.Delete)
                                       ], debug=True)
 
 

@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+  {% include 'partials/_post_list.html' %}
+  {% endfor %}
+{% endblock %}
