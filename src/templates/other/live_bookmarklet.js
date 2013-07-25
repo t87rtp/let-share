@@ -1,1 +1,1 @@
-javascript:(function(){var%20d=document;var%20s=d.createElement('script');s.type='text/javascript';s.charset='utf-8';s.src='/posts/{{post_id}}.js?immediate=true&minify=true';d.getElementsByTagName('body')[0].appendChild(s);})()
+javascript:(function(){var%20d=document;var%20s=d.createElement('script');s.type='text/javascript';s.charset='utf-8';s.src='{{host}}/posts/{{post_id}}.js?immediate=true&minify=true';d.getElementsByTagName('body')[0].appendChild(s);})()

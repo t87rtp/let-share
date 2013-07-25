@@ -26,7 +26,8 @@ class Post(ModelMod):
     def live_bookmarklet(self):
         path = os.path.join(os.path.dirname(__file__), 'templates/other/live_bookmarklet.js')
         template_values = {
-                           "post_id": self.key().id()
+                           "post_id": self.key().id(),
+                           "host": "http://" + os.environ.get("HTTP_HOST", "")
                            }
         return template.render(path, template_values)
 
