@@ -11,6 +11,9 @@ handlers:
   script: main.py
   login: required
 
+- url: /assets/.*
+  script: assets.py
+
 - url: /.*
   script: main.py
 

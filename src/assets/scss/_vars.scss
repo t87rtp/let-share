@@ -1,0 +1,87 @@
+/******************************************************************************************
+ * 変数群
+ ******************************************************************************************/
+$p_color: #000;
+
+/******************************************************************************************
+ * 変数群
+ ******************************************************************************************/
+/*
+ * 数字桁合わせ用関数
+ * 
+ * 連番ファイル名の数値桁合わせなどに使用。
+ * 
+ * 引数
+ * $num    変換元数値
+ * $digit  桁数
+ * 
+ * ※使用例
+ * zeropadding(2)
+ * 出力：02
+ * zeropadding(15, 4)
+ * 出力：0015
+ */
+
+@function zeropadding($num, $digit: 2){
+  $max-nums: 1; // will be '1, 10, 100, 1000...'
+  @for $i from 1 to $digit {
+    $max-nums: append($max-nums, nth($max-nums, $i) * 10);
+  }
+
+  $padding: '';
+  @for $i from 1 to $digit {
+    @if $num < nth($max-nums, $i + 1) {
+      $padding: $padding + "0";
+    }
+  }
+
+  @return unquote($padding + $num);
+}
+
+/******************************************************************************************
+ * Mixin
+ ******************************************************************************************/
+
+$set_prefix: -webkit-, -moz-, -o-, -ms-, '';
+
+/*
+ * ベンダープレフィックスがつくプロパティ用
+ * プロパティに$set_prefixで指定したprefixが付く。
+ * 
+ * 使用例
+ * @include prefixed_property(box-sizing, border-box)
+ * 
+ * 出力
+ * -webkit-box-sizing: border-box;
+ * -moz-box-sizing: border-box;
+ * box-sizing: border-box;
+ * 
+ * 依存関係
+ * $set_prefix
+ */
+@mixin prefixed_property($pf_prop, $value){
+  @each $prefix in $set_prefix {
+    #{$prefix}#{$pf_prop}: $value;
+  }
+}
+
+/*
+ * ベンダープレフィックスがつく値用
+ * 値に$set_prefixで指定したprefixが付く。
+ * 
+ * 使用例
+ * @include prefixed_property(display, box)
+ * 
+ * 出力
+ * display: -webkit-box
+ * display: -moz-box
+ * display: box
+ * 
+ * 依存関係
+ * $set_prefix
+ */
+@mixin prefixed_value($prop, $pf_value){
+  @each $prefix in $set_prefix {
+    #{$prop}: #{$prefix}#{$pf_value};
+  }
+}

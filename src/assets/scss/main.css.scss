@@ -1,0 +1,10 @@
+@option compress: no;
+
+@import "_vars.scss"
+
+.aaa{
+  width: $p_color;
+  .bbb{
+    @include prefixed_property(border-image, aaa);
+  }
+}
