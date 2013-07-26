@@ -1,5 +1,14 @@
-<form action="" method="post">
-  <input name="title" type="text" placeholder="title" value="{{ post.title }}"/>
-  <textarea name="body" placeholder="script" autoindent=true tabindent=true>{{ post.body }}</textarea>
-  <input type="submit" value="Post" />
+<form action="" method="post" id="post_form">
+  <div id="post_title_wrap">
+    <input name="title" id="post_title" type="text" placeholder="title" value="{{ post.title }}"/>
+  </div>
+  <div id="post_body_wrap">
+    <div id="line_number_wrap"></div>
+    <div id="textarea_box">
+      <textarea name="body" id="post_body" placeholder="script" autoindent=true tabindent=true linenumber=true wrap="off">{{ post.body }}</textarea>
+    </div>
+  </div>
+  <div id="post_buttons_wrap">
+    <input type="submit" value="Post" />
+  </div>
 </form>

@@ -1,15 +1,19 @@
 {% extends "layout.html" %}
 
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/show.css" type="text/css">
+{% endblock %}
+
 {% block title %}Post - {{ post.title }}{% endblock %}
 
 {% block content %}
   <div id="title_box">{{ post.title }}</div>
-  <div id="body_box">{{ post.body }}</div>
+  <div id="body_box">{{ post.body|safe }}</div>
   <a href="/posts/{{ post.key.id }}/edit">Edit</a><br>
   <a href="/posts/{{ post.key.id }}.js">Javascript</a><br>
   <a href="/posts/{{ post.key.id }}.js?minify=true">Javascript(minify)</a><br>
   <a href="/posts/{{ post.key.id }}.js?immediate=true">Javascript Immediate Function</a><br>
   <a href="/posts/{{ post.key.id }}.js?immediate=true&minify=true">Javascript(minify)</a><br>
-  as Bookmarklet: <a href="{{ post.bookmarklet }}">{{ post.title }}</a>
+  as Bookmarklet: <a href="{{ post.bookmarklet }}">{{ post.title }}</a><br>
   as Live Bookmarklet: <a href="{{ post.live_bookmarklet }}">{{ post.title }}</a>
 {% endblock %}

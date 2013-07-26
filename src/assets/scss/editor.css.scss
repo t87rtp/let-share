@@ -1,0 +1,69 @@
+@option compress: no;
+
+@import "_vars.scss"
+
+#contents{
+  #post_form{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    >#post_title_wrap{
+      
+      >input#post_title{
+        font-family: "VL Gothic", monospace;
+        width: 100%;
+        border: none;
+        line-height: 40px;
+        height: 40px;
+        font-size: 30px;
+      }
+    }
+    >#post_body_wrap{
+      position: absolute;
+      top: 40px;
+      left: 0px;
+      right: 0px;
+      bottom: 40px;
+      >div#line_number_wrap{
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 50px;
+        height: 100%;
+        @include prefixed_property(box-sizing, border-box);
+        overflow: hidden;
+        background: #eee;
+        .num_box{
+          font-family: "VL Gothic", monospace;
+          width: 100%;
+          text-align: right;
+          padding-right: 10px;
+          @include prefixed_property(box-sizing, border-box);
+          color: #888;
+        }
+      }
+      >div#textarea_box{
+        position: absolute;
+        top: 0px;
+        left: 50px;
+        right: 0px;
+        bottom: 0px;
+        >textarea#post_body{
+          font-family: "VL Gothic", monospace;
+          width: 100%;
+          height: 100%;
+          border: none;
+          resize: none;
+        }
+      }
+    }
+    >#post_buttons_wrap{
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+      height: 40px;
+      text-align: right;
+    }
+  }
+}
