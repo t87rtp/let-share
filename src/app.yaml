@@ -7,6 +7,9 @@ handlers:
 - url: /js
   static_dir: statics/javascripts
 
+- url: /css
+  static_dir: statics/stylesheets
+
 - url: /posts/new
   script: main.py
   login: required

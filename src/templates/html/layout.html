@@ -6,13 +6,17 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script type="text/javascript" src="/js/coffee-script.js"></script>
   {% block script %}{% endblock %}
+  <link rel="stylesheet" href="/css/reset.css" type="text/css">
   <link rel="stylesheet" href="/assets/css/main.css" type="text/css">
+  {% block style %}{% endblock %}
   <title>{% block title %}Layout{% endblock %}</title>
 </head>
 
 <body>
   {% include 'partials/_header.html' %}
+  <div id="contents">
   {% block content %}
   {% endblock %}
+  </div>
 </body>
 </html>

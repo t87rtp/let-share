@@ -3,7 +3,10 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
-  {% for post in posts %}
-  {% include 'partials/_post_list.html' %}
-  {% endfor %}
+  <ul id="posts">
+    <li>Posts</li>
+    {% for post in posts %}
+      {% include 'partials/_post_list.html' %}
+    {% endfor %}
+  </ul>
 {% endblock %}
