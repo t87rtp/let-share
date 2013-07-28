@@ -1,8 +1,5 @@
-/******************************************************************************************
- * 変数群
- ******************************************************************************************/
-$p_color: #000;
-
+@charset "UTF-8";
+@option compress: no;
 /******************************************************************************************
  * 変数群
  ******************************************************************************************/
@@ -21,29 +18,6 @@ $p_color: #000;
  * zeropadding(15, 4)
  * 出力：0015
  */
-
-@function zeropadding($num, $digit: 2){
-  $max-nums: 1; // will be '1, 10, 100, 1000...'
-  @for $i from 1 to $digit {
-    $max-nums: append($max-nums, nth($max-nums, $i) * 10);
-  }
-
-  $padding: '';
-  @for $i from 1 to $digit {
-    @if $num < nth($max-nums, $i + 1) {
-      $padding: $padding + "0";
-    }
-  }
-
-  @return unquote($padding + $num);
-}
-
-/******************************************************************************************
- * Mixin
- ******************************************************************************************/
-
-$set_prefix: -webkit-, -moz-, -o-, -ms-, '';
-
 /*
  * ベンダープレフィックスがつくプロパティ用
  * プロパティに$set_prefixで指定したprefixが付く。
@@ -59,12 +33,6 @@ $set_prefix: -webkit-, -moz-, -o-, -ms-, '';
  * 依存関係
  * $set_prefix
  */
-@mixin prefixed_property($pf_prop, $value){
-  @each $prefix in $set_prefix {
-    #{$prefix}#{$pf_prop}: $value;
-  }
-}
-
 /*
  * ベンダープレフィックスがつく値用
  * 値に$set_prefixで指定したprefixが付く。
@@ -80,8 +48,6 @@ $set_prefix: -webkit-, -moz-, -o-, -ms-, '';
  * 依存関係
  * $set_prefix
  */
-@mixin prefixed_value($prop, $pf_value){
-  @each $prefix in $set_prefix {
-    #{$prop}: #{$prefix}#{$pf_value};
-  }
+#contents #body_box {
+  white-space: pre-wrap;
 }

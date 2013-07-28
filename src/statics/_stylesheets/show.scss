@@ -1,6 +1,8 @@
 @option compress: no;
 
-@import "_vars.scss"
+@import "_variables";
+@import "_functions";
+@import "_mixins";
 
 #contents{
   #body_box{

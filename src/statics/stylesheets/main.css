@@ -1,0 +1,55 @@
+@charset "UTF-8";
+@option compress: no;
+/******************************************************************************************
+ * 変数群
+ ******************************************************************************************/
+/*
+ * 数字桁合わせ用関数
+ * 
+ * 連番ファイル名の数値桁合わせなどに使用。
+ * 
+ * 引数
+ * $num    変換元数値
+ * $digit  桁数
+ * 
+ * ※使用例
+ * zeropadding(2)
+ * 出力：02
+ * zeropadding(15, 4)
+ * 出力：0015
+ */
+/*
+ * ベンダープレフィックスがつくプロパティ用
+ * プロパティに$set_prefixで指定したprefixが付く。
+ * 
+ * 使用例
+ * @include prefixed_property(box-sizing, border-box)
+ * 
+ * 出力
+ * -webkit-box-sizing: border-box;
+ * -moz-box-sizing: border-box;
+ * box-sizing: border-box;
+ * 
+ * 依存関係
+ * $set_prefix
+ */
+/*
+ * ベンダープレフィックスがつく値用
+ * 値に$set_prefixで指定したprefixが付く。
+ * 
+ * 使用例
+ * @include prefixed_property(display, box)
+ * 
+ * 出力
+ * display: -webkit-box
+ * display: -moz-box
+ * display: box
+ * 
+ * 依存関係
+ * $set_prefix
+ */
+#contents {
+  width: 50%;
+  height: 600px;
+  margin-left: 100px;
+}

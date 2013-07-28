@@ -1,0 +1,32 @@
+/*
+ * 数字桁合わせ用関数
+ * 
+ * 連番ファイル名の数値桁合わせなどに使用。
+ * 
+ * 引数
+ * $num    変換元数値
+ * $digit  桁数
+ * 
+ * ※使用例
+ * zeropadding(2)
+ * 出力：02
+ * zeropadding(15, 4)
+ * 出力：0015
+ */
+
+@function zeropadding($num, $digit: 2){
+  $max-nums: 1; // will be '1, 10, 100, 1000...'
+  @for $i from 1 to $digit {
+    $max-nums: append($max-nums, nth($max-nums, $i) * 10);
+  }
+
+  $padding: '';
+  @for $i from 1 to $digit {
+    @if $num < nth($max-nums, $i + 1) {
+      $padding: $padding + "0";
+    }
+  }
+
+  @return unquote($padding + $num);
+}
+
